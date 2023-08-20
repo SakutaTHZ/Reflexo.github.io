@@ -109,10 +109,10 @@ const playerHit = () => {
     console.log('Enemy Health - '+enemyHealth)
 }
 
-const endGame = () =>{
+const endGame = (winCon) =>{
     document.querySelector(".gamescreen").innerHTML+=`
     <div class="Endscreen">
-        <p class="EndText">Game Over. You Win !!</p>
+        <p class="EndText">Game Over. ${winCon} !!</p>
         <div>
             <button onclick="location.reload()">Retry</button>
             <button>Main Menu</button>
@@ -144,10 +144,10 @@ const start = () => {
 
     if(playerHealth <= 0){
         playerHealth = 1
-        endGame()
+        endGame("You LOSE")
     }else if(enemyHealth <= 0){
         enemyHealth = 1
-        endGame()
+        endGame("You WIN")
     }
 
     requestAnimationFrame(start);
