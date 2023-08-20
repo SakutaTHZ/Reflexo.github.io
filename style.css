@@ -17,6 +17,7 @@
     --almostdead: #9254C8;
     --borderColor: 5px solid rgba(255, 255, 255, 0.3);
     --shadowColor: rgba(0, 0, 0, 0.15);
+    --enemyhealth: rgb(245, 25, 25);
 }
 
 body{
@@ -34,7 +35,23 @@ body::before{
     z-index: -5;
 }
 
+button{
+    background: var(--background);
+    color: black;
+    width: 120px;
+    height: 30px;
+    transition: 0.3s ease-in-out;
+}
+button:hover{
+    cursor: pointer;
+    color: var(--fontColor);
+    text-shadow: 0 0 5px var(--fontColor);
+    background: var(--damagedhealth);
+    box-shadow: 0 0 10px var(--damagedhealth),0 0 5px var(--damagedhealth);
+}
+
 .gamescreen{
+    position: relative;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -88,12 +105,14 @@ body::before{
     height: 100%;
     opacity: 0.7;
     border-radius: 0  10px 0 0;
-    animation: 2s pulsing linear alternate infinite;
     background-color: #e5e5f7;
     
     opacity: 0.8;
     background-size: 10px 10px;
     background-image: repeating-linear-gradient(45deg, #ffffff 0, #ebf91f 1px, #65ff12 0, #65ff12 50%);
+}
+.player2>.playerDetailBox>.healthBox>.health{
+    background-image: repeating-linear-gradient(45deg, #ff6060 0, #f97a1f 1px, red 0, red 50%);
 }
 
 .timerBox{
@@ -168,6 +187,21 @@ body::before{
 .hit{
     animation: 0.5s getHit linear alternate;
 }
+.Endscreen{
+    position: fixed;
+    z-index: 100;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(10px);
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 5vw;
+    text-shadow: 0 0 30px white,0 0 10px white, 0 0 10px black;
+}
 
 @keyframes spawnSpan {
     from{
@@ -206,6 +240,9 @@ body::before{
     .gamescreen>*{
         width: 100%;
         height: 30%;
+    }
+    .Endscreen{
+        height: 100%;
     }
     .gamescreen>*:nth-child(2){
         height: 50%;

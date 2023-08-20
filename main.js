@@ -1,10 +1,38 @@
 //Codes added by KuroDaisuke
+const playerData = [
+    {Name:"Albedo",imagePath:"images/Albedo.jpg"},
+    {Name:"Alhaithem",imagePath:"images/Alhaithem.jpg"},
+    {Name:"Ayaka",imagePath:"images/Ayaka.jpg"},
+    {Name:"Ayato",imagePath:"images/Ayato.jpg"},
+    {Name:"Ganyu",imagePath:"images/Ganyu.jpg"},
+    {Name:"Hu Tao",imagePath:"images/HuTao.jpg"},
+    {Name:"Itto",imagePath:"images/Itto.jpg"},
+    {Name:"Kazuha",imagePath:"images/Kazuha.jpg"},
+    {Name:"Klee",imagePath:"images/Klee.jpg"},
+    {Name:"Mona",imagePath:"images/Mona.jpg"},
+    {Name:"Paimon",imagePath:"images/Paimon.jpg"},
+    {Name:"Raiden",imagePath:"images/Raiden.jpg"},
+    {Name:"Scara",imagePath:"images/Scara.jpg"},
+    {Name:"Traveller",imagePath:"images/Traveller.jpg"},
+    {Name:"Zhongli",imagePath:"images/Zhongli.png"},
+]
+
+const setPlayers = () =>{
+    let player1Data = playerData[Math.floor(Math.random()* playerData.length)]
+    document.querySelector('.player1').style.backgroundImage=`url(${player1Data.imagePath})`
+    document.querySelector('.player1>.playerDetailBox>.name').innerHTML = player1Data.Name
+
+    let player2Data = playerData[Math.floor(Math.random()* playerData.length)]
+    document.querySelector('.player2').style.backgroundImage=`url(${player2Data.imagePath})`
+    document.querySelector('.player2>.playerDetailBox>.name').innerHTML = player2Data.Name
+}
+setPlayers()
 
 const controls = ["w","a","s","d","q","e"]
 const timer = document.querySelector(".timeLeft")
 const counterBox = document.querySelector(".counter") 
 const totalTime = 3;
-let todo = []
+
 let current
 let time = 0
 let skip = false
@@ -16,7 +44,6 @@ let critChance = 30;
 
 const random = () => controls[Math.floor(Math.random() * controls.length)]
 const resetList = () => {
-    // document.querySelector(".typeBox").innerHTML = todo.map((e) => `<span>${e}</span>`).join(" ")
     document.querySelectorAll('.typeBox>p')[0].remove()
     let parent = document.querySelector('.typeBox')
     let child = document.createElement('p')
@@ -26,11 +53,8 @@ const resetList = () => {
 
 const reset = (callback = ()=>{}) => {
     skip = false
-    // todo.shift()
-    // todo.push(random())
     resetList()
     current = document.querySelectorAll('.typeBox>p')[0].innerHTML
-    console.log(current)
     time = 0
     callback()
 }
@@ -45,7 +69,6 @@ const setTodo = () => {
         document.querySelector(".typeBox").innerHTML = document.querySelector(".typeBox").innerHTML +`<p>${random()}</p>`
     }
     current = document.querySelectorAll('.typeBox>p')[0].innerHTML
-    console.log(current)
 }
 
 const healthReset = (player) => {
@@ -70,6 +93,7 @@ const enemyHit = () => {
 
     healthReset(1)
     setTimeout(() => enemyHit(),1000)
+    //console.log('Player Health - ' + playerHealth)
 }
 enemyHit()
 
@@ -82,7 +106,19 @@ const playerHit = () => {
         enemyHealth -= 2;
         hitAnimation(2)
     }
-    
+    console.log('Enemy Health - '+enemyHealth)
+}
+
+const endGame = () =>{
+    document.querySelector(".gamescreen").innerHTML+=`
+    <div class="Endscreen">
+        <p class="EndText">Game Over. You Win !!</p>
+        <div>
+            <button onclick="location.reload()">Retry</button>
+            <button>Main Menu</button>
+        </div>
+    </div>
+    `
 }
 
 const start = () => {
@@ -105,8 +141,19 @@ const start = () => {
         timer.style.width = `${Math.floor(100-((time/totalTime)*100))}%`
         time += 0.01;
     }
+
+    if(playerHealth <= 0){
+        playerHealth = 1
+        endGame()
+    }else if(enemyHealth <= 0){
+        enemyHealth = 1
+        endGame()
+    }
+
     requestAnimationFrame(start);
 }
+
+
 
 setTodo()
 // resetList()
