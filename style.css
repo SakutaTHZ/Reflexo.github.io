@@ -44,6 +44,7 @@ body::before{
     padding: 10px;
 }
 .gamescreen>*{
+    position: relative;
     box-shadow: 0 0 20px var(--shadowColor),inset 0 0 20px var(--shadowColor);
     /* border: var(--borderColor); */
     width: calc(100vw/3.5);
@@ -83,7 +84,7 @@ body::before{
     overflow: hidden;
 }
 .health{
-    width: 80%;
+    width: 100%;
     height: 100%;
     opacity: 0.7;
     border-radius: 0  10px 0 0;
@@ -128,6 +129,64 @@ body::before{
     border: 1px solid white;
     padding: 0 20px;
     border-radius: 0 5px 0 5px;
+}
+.gameBox{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+.typeBox{
+    border: 1px solid white;
+    padding: 10px;
+    width: 100%;
+    height: 100%;
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
+}
+.typeBox>p{
+    font-size: 2em;
+    border: 1px solid white;
+    width: 30%;
+    aspect-ratio: 2/1;
+    text-align: center;
+    animation: spawnSpan 0.5s linear;
+}
+.typeBox>:nth-last-child(1){
+    opacity: 0.1;
+}
+.typeBox>:nth-last-child(2){
+    opacity: 0.25;
+}
+.typeBox>:nth-last-child(3){
+    opacity: 0.5;
+}
+
+.hit{
+    animation: 0.5s getHit linear alternate;
+}
+
+@keyframes spawnSpan {
+    from{
+        opacity: 0;
+        transform: translateX(-100px);
+    }to{
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes getHit {
+    0%,100%{
+        transform: translateY(0) translateX(0);
+        box-shadow: inset 0 0 100px rgba(255, 0, 0, 0),inset 0 0 20px rgba(255, 0, 0, 0);
+    }55%{
+        transform: translateY(3px) translateX(-3px);
+        box-shadow: inset 0 0 100px red,inset 0 0 20px red;
+    }
 }
 
 @keyframes pulsing {
